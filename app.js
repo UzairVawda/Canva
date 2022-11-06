@@ -11,4 +11,8 @@ app.get('/sayHello', (req, res)=>{
 	res.status(200).send("<h1>SAY HELLO FROM BACK END</h1>");
 });
 
+
+console.log('test');
+
+
 app.listen(8000);
