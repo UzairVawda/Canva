@@ -26,4 +26,4 @@ app.use(function(req, res, next) {
 	res.send('500: RESOURCE NOT FOUND')
 });
 
-app.listen(8000);
+app.listen(3690);

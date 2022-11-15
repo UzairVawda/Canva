@@ -1,9 +1,9 @@
 function getLogin(req, res, next){
-	res.send("SAY HELLO FROM login");
+	res.render('login')
 }
 
 function getSignup(req, res, next){
-	res.send("SAY HELLO FROM signup");
+	res.render('signup')
 }
 
 module.exports = {
