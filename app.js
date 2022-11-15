@@ -1,18 +1,29 @@
-const express = require('express');
+const path = require('path')
+
+const sharedRoutes = require('./Router/shared.routes');
+const authRoutes = require('./Router/auth.routes');
+
+const express = require('express')
 
 const app = express();
 
-app.get('/', (req, res)=>{
-	res.status(200).send("<h1>Hello!</h1>");
+// set the view engine to ejs
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'Views'))
+
+// app.use(express.static(__dirname, 'Public'))
+app.use(express.static(path.join(__dirname, 'Public')));
+
+app.use('/css', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')))
+app.use('/js', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js')))
+app.use('/js', express.static(path.join(__dirname, 'node_modules/jquery/dist')))
+
+
+app.use(sharedRoutes);
+app.use(authRoutes);
+
+app.use(function(req, res, next) {
+	res.send('500: RESOURCE NOT FOUND')
 });
 
-
-app.get('/sayHello', (req, res)=>{
-	res.status(200).send("<h1>SAY HELLO FROM BACK END</h1>");
-});
-
-
-console.log('test');
-
-
-app.listen(8000);
+app.listen(3690);
