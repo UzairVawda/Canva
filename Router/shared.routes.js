@@ -1,9 +1,11 @@
 const express = require('express')
+const sharedController = require('../Controllers/shared.controller');
 
 const router = express.Router();
 
-router.get('/', function (req, res, next) {
-	res.render('index', { errorMess: ['password must be 8 characters', 'password must match'], errorFlag : true })
-})
+router.get('/', sharedController.authorize, sharedController.homepage)
+
+
+router.post('/', sharedController.logout)
 
 module.exports = router;

@@ -2,6 +2,7 @@ const path = require('path')
 
 const sharedRoutes = require('./Router/shared.routes');
 const authRoutes = require('./Router/auth.routes');
+const cookieParser = require('cookie-parser');
 
 const db = require('./db/database')
 
@@ -16,7 +17,7 @@ app.use(express.urlencoded({ extended: false }))
 
 // app.use(express.static(__dirname, 'Public'))
 app.use(express.static(path.join(__dirname, 'Public')));
-
+app.use(cookieParser());
 app.use('/css', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')))
 app.use('/js', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js')))
 app.use('/js', express.static(path.join(__dirname, 'node_modules/jquery/dist')))

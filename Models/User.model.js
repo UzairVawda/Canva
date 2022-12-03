@@ -1,3 +1,4 @@
+const { ObjectID } = require('bson');
 const db = require('../db/database')
 
 class User {
@@ -8,17 +9,17 @@ class User {
     }
 
     async signupUser() {
-        await db.getDB().collection('user').insertOne({ user : {
+        await db.getDB().collection('user').insertOne({
             email : this.email,
             password : this.password
-        }})
+        })
     }
 
     async checkEmailExist(userEmail){
         let check;
         const allUsers = await db.getDB().collection('user').find({}).toArray();
         allUsers.filter(user => {
-            if (user.user.email == userEmail){
+            if (user.email == userEmail){
                 check = true
             }
         })
@@ -28,14 +29,15 @@ class User {
         let userPass;
         const allUsers = await db.getDB().collection('user').find({}).toArray();
         allUsers.filter(user => {
-            if (user.user.email == userEmail){
-                userPass = user.user.password;
+            if (user.email == userEmail){
+                userPass = user.password;
             }
         })
         if (userPass === userPassword) {
             return true;
         }
     }
+
 }
 
 module.exports = User;
