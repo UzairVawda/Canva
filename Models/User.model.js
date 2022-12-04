@@ -1,5 +1,4 @@
-const { ObjectID } = require('bson');
-const db = require('../db/database')
+const db = require('../db/database');
 
 class User {
 

@@ -1,4 +1,3 @@
-const { get } = require('jquery');
 const db = require('../db/database');
 const User = require('../Models/User.model')
 
@@ -8,7 +7,15 @@ function getLogin(req, res){
 }
 
 function getSignup(req, res){
-	res.render('signup')
+    userSession = req.session.user
+    console.log(userSession);
+    if (!userSession) {
+        userSession = {
+            email : "",
+            password : ""
+        }
+    }
+	res.render('signup', {data: userSession})
 }
 async function getUserId (userEmail) {
     let userId
@@ -40,7 +47,7 @@ async function loginUser(req, res, next) {
         }
     }
     else{
-    res.redirect('/signup')
+        res.redirect('/signup')
     }
 }
 
@@ -64,10 +71,14 @@ async function signupUser(req, res, next) {
         }
     }
     else {
+        req.session.user = {
+            errorMessage : "Passwords Must Match",
+            email : req.body.typeEmailX,
+            password : req.body.typePasswordX
+        }
         console.log('passwords must match');
-        res.redirect('/signup');
+        getSignup(req,res);
     }
-
 
 }
 

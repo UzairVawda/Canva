@@ -10,6 +10,7 @@ function logout (req,res) {
 }
 function authorize (req,res,next) {
     const { cookies } = req;
+    console.log(cookies)
     if (cookies.auth != 'authorized'){
         res.redirect('/login');
     }

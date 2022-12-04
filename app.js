@@ -3,6 +3,7 @@ const path = require('path')
 const sharedRoutes = require('./Router/shared.routes');
 const authRoutes = require('./Router/auth.routes');
 const cookieParser = require('cookie-parser');
+const cookieSession = require('cookie-session')
 
 const db = require('./db/database')
 
@@ -13,14 +14,22 @@ const app = express();
 // set the view engine to ejs
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'Views'))
+
+app.use(cookieParser());
+app.use(cookieSession({
+	name: 'sessionCANVA',
+	keys: 'sessionCANVA',
+	// Cookie Options
+	maxAge: 24 * 60 * 60 * 1000 // 24 hours
+}))
+
 app.use(express.urlencoded({ extended: false }))
 
 // app.use(express.static(__dirname, 'Public'))
 app.use(express.static(path.join(__dirname, 'Public')));
-app.use(cookieParser());
-app.use('/css', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')))
-app.use('/js', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js')))
-app.use('/js', express.static(path.join(__dirname, 'node_modules/jquery/dist')))
+app.use(express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')))
+app.use(express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js')))
+app.use(express.static(path.join(__dirname, 'node_modules/jquery/dist')))
 
 
 app.use(sharedRoutes);

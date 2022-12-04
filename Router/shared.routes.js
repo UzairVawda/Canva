@@ -5,7 +5,6 @@ const router = express.Router();
 
 router.get('/', sharedController.authorize, sharedController.homepage)
 
-
 router.post('/', sharedController.logout)
 
 module.exports = router;
