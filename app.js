@@ -18,7 +18,7 @@ app.set('views', path.join(__dirname, 'Views'))
 app.use(cookieParser());
 app.use(cookieSession({
 	name: 'sessionCANVA',
-	keys: 'sessionCANVA',
+	keys: ['sessionCANVA'],
 	// Cookie Options
 	maxAge: 24 * 60 * 60 * 1000 // 24 hours
 }))

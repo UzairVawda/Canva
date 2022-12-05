@@ -1,3 +1,4 @@
+const db = require('../db/database');
 
 function homePage (req, res, next) {
 	res.render('index')
@@ -8,14 +9,20 @@ function logout (req,res) {
     res.clearCookie("user_id");
 	res.redirect('/login');
 }
-function authorize (req,res,next) {
+async function authorize (req,res,next) {
     const { cookies } = req;
-    console.log(cookies)
-    if (cookies.auth != 'authorized'){
-        res.redirect('/login');
+    const allUsers = await db.getDB().collection('user').find({}).toArray();
+    let check;
+    allUsers.filter(user => {
+        if (user._id.toString() === cookies.auth){
+            check = true;
+        }
+    })
+    if (check != true) {
+        res.redirect('login');
     }
     else {
-        next();
+        next()
     }
 }
 

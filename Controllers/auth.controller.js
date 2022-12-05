@@ -3,12 +3,17 @@ const User = require('../Models/User.model')
 
 
 function getLogin(req, res){
-	res.render('login') 
+	userSession = req.session.user
+    if (!userSession) {
+        userSession = {
+            email : "",
+        }
+    }
+	res.render('login', {data: userSession})
 }
 
 function getSignup(req, res){
-    userSession = req.session.user
-    console.log(userSession);
+    userSession = req.session.user1
     if (!userSession) {
         userSession = {
             email : "",
@@ -21,8 +26,8 @@ async function getUserId (userEmail) {
     let userId
     const allUsers = await db.getDB().collection('user').find({}).toArray();
     allUsers.filter(user => {
-        if (user.email == userEmail){
-            userId = user._id;
+        if (user.email === userEmail){
+            userId = user._id.toString();
         }
     })
     return userId
@@ -38,16 +43,22 @@ async function loginUser(req, res, next) {
         console.log('passed email check');
         if (passCheck === true) {
             console.log('passed pass check');
-            res.cookie('auth', 'authorized');
-            res.cookie('user_id', await getUserId(typeEmailX))
+            res.cookie('auth', await getUserId(typeEmailX));
             res.redirect('/')
         }else{
-            console.log('failed check')
-            res.redirect('./login');
+            req.session.user = {
+                errorMessage : "*Incorrect password*",
+                email : req.body.typeEmailX,
+            }
+            res.redirect('/login')
         }
     }
     else{
-        res.redirect('/signup')
+        req.session.user = {
+            errorMessage : "*An account with this email doesn't exists*",
+            email : req.body.typeEmailX,
+        }
+        res.redirect('/login')
     }
 }
 
@@ -56,8 +67,12 @@ async function signupUser(req, res, next) {
         const newUser = new User(req.body.typeEmailX, req.body.typePasswordX)
         let emailExist = await newUser.checkEmailExist(req.body.typeEmailX);
         if (emailExist === true) {
-            console.log('user already exists');
-            res.redirect('/login');
+            req.session.user1 = {
+                errorMessage : "*An account with this email already exists*",
+                email : req.body.typeEmailX,
+                password : req.body.typePasswordX
+            }
+            res.redirect('/signup');
         }
         else {
             try {
@@ -71,13 +86,12 @@ async function signupUser(req, res, next) {
         }
     }
     else {
-        req.session.user = {
-            errorMessage : "Passwords Must Match",
+        req.session.user1 = {
+            errorMessage : "*Passwords Must Match*",
             email : req.body.typeEmailX,
             password : req.body.typePasswordX
         }
-        console.log('passwords must match');
-        getSignup(req,res);
+        res.redirect('/signup');
     }
 
 }
