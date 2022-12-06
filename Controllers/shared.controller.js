@@ -14,7 +14,19 @@ function clearAuthSessions (req,res,next){
 }
 
 function homePage (req, res, next) {
-	res.render('index')
+	res.render('home')
+}
+
+function createPost (req,res,next) {
+    res.render('createPost')
+}
+
+function editAndDelete (req,res,next) {
+    res.render('editAndDelete');
+}
+
+function profile (req,res,next) {
+    res.render('userProfile');
 }
 
 function logout (req,res) {
@@ -44,5 +56,8 @@ module.exports = {
     homepage : homePage,
     logout : logout,
     authorize : authorize,
-    clearAuthSessions : clearAuthSessions
+    clearAuthSessions : clearAuthSessions,
+    createPost : createPost,
+    editAndDelete : editAndDelete,
+    profile : profile
 }
