@@ -4,9 +4,9 @@ const express = require('express')
 
 const router = express.Router();
 
-router.get('/login', authController.getLogin);
+router.get('/login', authController.clearSignupSession, authController.getLogin);
 
-router.get('/signup', authController.getSignup);
+router.get('/signup', authController.clearLoginSession, authController.getSignup);
 
 router.post('/signup', authController.signupUser);
 

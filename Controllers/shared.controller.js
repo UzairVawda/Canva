@@ -1,5 +1,18 @@
 const db = require('../db/database');
 
+function clearAuthSessions (req,res,next){
+    req.session.user = {
+        errorMessage : "",
+        email : ""
+    }
+    req.session.user1 = {
+        errorMessage : "",
+        email : "",
+        password : ""
+    }
+    next()
+}
+
 function homePage (req, res, next) {
 	res.render('index')
 }
@@ -30,5 +43,6 @@ async function authorize (req,res,next) {
 module.exports = {
     homepage : homePage,
     logout : logout,
-    authorize : authorize
+    authorize : authorize,
+    clearAuthSessions : clearAuthSessions
 }

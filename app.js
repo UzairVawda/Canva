@@ -19,8 +19,7 @@ app.use(cookieParser());
 app.use(cookieSession({
 	name: 'sessionCANVA',
 	keys: ['sessionCANVA'],
-	// Cookie Options
-	maxAge: 24 * 60 * 60 * 1000 // 24 hours
+	maxAge: 24 * 60 * 60 * 1000 
 }))
 
 app.use(express.urlencoded({ extended: false }))

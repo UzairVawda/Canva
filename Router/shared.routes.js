@@ -3,7 +3,7 @@ const sharedController = require('../Controllers/shared.controller');
 
 const router = express.Router();
 
-router.get('/', sharedController.authorize, sharedController.homepage)
+router.get('/', sharedController.authorize, sharedController.clearAuthSessions, sharedController.homepage)
 
 router.post('/', sharedController.logout)
 

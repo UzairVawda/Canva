@@ -5,9 +5,7 @@ const User = require('../Models/User.model')
 function getLogin(req, res){
 	userSession = req.session.user
     if (!userSession) {
-        userSession = {
-            email : "",
-        }
+        userSession = {}
     }
 	res.render('login', {data: userSession})
 }
@@ -15,10 +13,7 @@ function getLogin(req, res){
 function getSignup(req, res){
     userSession = req.session.user1
     if (!userSession) {
-        userSession = {
-            email : "",
-            password : ""
-        }
+        userSession = {}
     }
 	res.render('signup', {data: userSession})
 }
@@ -96,10 +91,20 @@ async function signupUser(req, res, next) {
 
 }
 
+function clearLoginSession(req,res,next) {
+    req.session.user = {}
+    next()
+}
+function clearSignupSession(req,res,next) {
+    req.session.user1 = {}
+    next()
+}
 
 module.exports = {
     getLogin : getLogin,
     getSignup : getSignup,
     signupUser : signupUser,
-    loginUser : loginUser
+    loginUser : loginUser,
+    clearLoginSession : clearLoginSession,
+    clearSignupSession : clearSignupSession
 }
