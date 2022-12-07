@@ -2,12 +2,13 @@
   @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@600&display=swap');
 
   body{
-    background-color: rgb(40, 92, 161)
+    background-color: rgb(40, 92, 161);
+    overflow-x:hidden;
   }
-  .nav-link {
+  .nav-element {
     color: #fff;
   }
-  .nav-link:hover{
+  .nav-element:hover{
     color: rgb(40, 92, 161)
   }
   i {
@@ -15,7 +16,7 @@
   }
   #logo i{
     font-size: 2rem;
-    margin-bottom: 8rem;
+    color:#fff
   }
 </style>
 
@@ -27,22 +28,22 @@
       </a>
     </li>
     <li class="nav-item">
-      <a href="/" id="feed" class="nav-link py-3 mt-3" aria-current="page" title="Home" data-bs-toggle="tooltip" data-bs-placement="right">
+      <a href="/" id="feed" class="nav-element nav-link py-3 mt-3" aria-current="page" title="Home" data-bs-toggle="tooltip" data-bs-placement="right">
         <i class="fa-solid fa-house"></i>
       </a>
     </li>
     <li>
-      <a href="/create" id="createPost" class="nav-link py-3 mt-3" title="Create Post" data-bs-toggle="tooltip" data-bs-placement="right">
-        <i class="fa-solid fa-plus"></i>
+      <a href="/create" id="createPost" class="nav-element nav-link py-3 mt-3" title="Create Post" data-bs-toggle="tooltip" data-bs-placement="right">
+        <i class="fa-regular fa-square-plus"></i>
       </a>
     </li>
     <li>
-      <a href="/editAndDelete" id="editAndDelete" class="nav-link py-3 mt-3" title="Edit Post" data-bs-toggle="tooltip" data-bs-placement="right">
+      <a href="/editAndDelete" id="editAndDelete" class="nav-element nav-link py-3 mt-3" title="Edit Post" data-bs-toggle="tooltip" data-bs-placement="right">
         <i class="fa-solid fa-pen-to-square"></i>
       </a>
     </li>
     <li>
-      <a href="/profile" id="userProfile" class="nav-link py-3 mt-3" title="My Profile" data-bs-toggle="tooltip" data-bs-placement="right">
+      <a href="/profile" id="userProfile" class="nav-element nav-link py-3 mt-3" title="My Profile" data-bs-toggle="tooltip" data-bs-placement="right">
         <i class="fa-solid fa-user"></i>
       </a>
     </li>

@@ -26,7 +26,8 @@ function editAndDelete (req,res,next) {
 }
 
 function profile (req,res,next) {
-    res.render('userProfile');
+    userName = req.cookies.auth
+    res.render('userProfile', {userName});
 }
 
 function logout (req,res) {
