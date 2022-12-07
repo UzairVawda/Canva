@@ -1,22 +1,53 @@
-<%- include('./shared/head.ejs') %> 
-<link href="/css/home.css" rel="stylesheet">
-<title>Canva!</title>
-</head>
-<style>
-#createPost {
-  background-color:rgb(78, 84, 91);
-  color: #fff;
-}  
-</style>
+<%- include('./shared/head.ejs') %>
+    <link href="/css/home.css" rel="stylesheet">
+    <title>Canva!</title>
+    </head>
+    <style>
+        #createPost {
+            color: rgb(40, 92, 161)
+        }
+        .create-post {
+            font-family: 'Source Code Pro', monospace;
+        }
+        .form-control-lg {
+            width: 500px;
+        }
+    </style>
 
-  <body>
+    <body>
 
-  <main>
-    <%- include('./shared/homeSideNav.ejs') %> 
-    <h1>Create Post</h1>
-  </main>
-  <script src="/bootstrap.bundle.min.js"></script>
+        <main>
+            <%- include('./shared/homeSideNav.ejs') %>
+                <div class="create-post">
+                    <div class="card-body p-5 text-center">
+                        <form class="mb-md-5 mt-md-4 pb-5" method="post" action="">
 
-  <script src="/js/home.js"></script>
-  </body>
-</html>
+                            <h2 class="fw-bold mb-2 text-uppercase">Create A Post!</h2>
+
+                            <div class="form-outline form-white mb-4">
+                                <input type="title" id="title" class="form-control-lg" name="title"
+                                    placeholder="title..." />
+                            </div>
+                            <div class="form-outline form-white mb-4">
+                                <input type="caption" id="caption" class="form-control-lg" name="caption"
+                                    placeholder="caption..." />
+                            </div>
+                            <div class="form-outline form-white mb-4">
+                                <textarea type="body" id="body" class="form-control-lg" name="body"
+                                    placeholder="say someting..."></textarea>
+                            </div>
+                            <div class="form-outline form-white mb-4">
+                                <input type="file" id="img" name="img" accept="image/*">
+                            </div> 
+                            <div>
+                            <button class="btn btn-outline-light btn-lg px-5" type="submit">Create Post</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+        </main>
+        <script src="/bootstrap.bundle.min.js"></script>
+
+        <script src="/js/home.js"></script>
+    </body>

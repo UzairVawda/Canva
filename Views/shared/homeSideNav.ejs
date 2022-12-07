@@ -1,4 +1,6 @@
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@600&display=swap');
+
   body{
     background-color: rgb(40, 92, 161)
   }
@@ -6,32 +8,41 @@
     color: #fff;
   }
   .nav-link:hover{
-    color: rgb(56, 83, 133);
+    color: rgb(40, 92, 161)
   }
   i {
     font-size: 1.3rem;
   }
+  #logo i{
+    font-size: 2rem;
+    margin-bottom: 8rem;
+  }
 </style>
 
 <div id="sidebar" class="d-flex flex-column flex-shrink-0 bg-dark" style="width: 4.5rem;">
-  <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
+  <ul id="nav-list" class="nav nav-pills nav-flush flex-column mb-auto text-center">
     <li class="nav-item">
-      <a href="/" id="feed" class="nav-link py-3" aria-current="page" title="Home" data-bs-toggle="tooltip" data-bs-placement="right">
+      <a href="/" id="logo" class="nav-link py-3" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right">
+        <i class="fa-solid fa-dumbbell"></i>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="/" id="feed" class="nav-link py-3 mt-3" aria-current="page" title="Home" data-bs-toggle="tooltip" data-bs-placement="right">
         <i class="fa-solid fa-house"></i>
       </a>
     </li>
     <li>
-      <a href="/create" id="createPost" class="nav-link py-3 mt-3" title="Products" data-bs-toggle="tooltip" data-bs-placement="right">
+      <a href="/create" id="createPost" class="nav-link py-3 mt-3" title="Create Post" data-bs-toggle="tooltip" data-bs-placement="right">
         <i class="fa-solid fa-plus"></i>
       </a>
     </li>
     <li>
-      <a href="/editAndDelete" id="editAndDelete" class="nav-link py-3 mt-3" title="Orders" data-bs-toggle="tooltip" data-bs-placement="right">
+      <a href="/editAndDelete" id="editAndDelete" class="nav-link py-3 mt-3" title="Edit Post" data-bs-toggle="tooltip" data-bs-placement="right">
         <i class="fa-solid fa-pen-to-square"></i>
       </a>
     </li>
     <li>
-      <a href="/profile" id="userProfile" class="nav-link py-3 mt-3" title="Customers" data-bs-toggle="tooltip" data-bs-placement="right">
+      <a href="/profile" id="userProfile" class="nav-link py-3 mt-3" title="My Profile" data-bs-toggle="tooltip" data-bs-placement="right">
         <i class="fa-solid fa-user"></i>
       </a>
     </li>
