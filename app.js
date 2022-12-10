@@ -1,6 +1,6 @@
 const path = require('path')
 
-const sharedRoutes = require('./Router/shared.routes');
+const blogRoutes = require('./Router/blog.routes');
 const authRoutes = require('./Router/auth.routes');
 const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session')
@@ -8,6 +8,7 @@ const cookieSession = require('cookie-session')
 const db = require('./db/database')
 
 const express = require('express');
+const res = require('express/lib/response');
 
 const app = express();
 
@@ -23,18 +24,17 @@ app.use(cookieSession({
 
 app.use(express.urlencoded({ extended: false }))
 
-// app.use(express.static(__dirname, 'Public'))
 app.use(express.static(path.join(__dirname, 'Public')));
 app.use(express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')))
 app.use(express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js')))
 app.use(express.static(path.join(__dirname, 'node_modules/jquery/dist')))
 
 
-app.use(sharedRoutes);
+app.use(blogRoutes);
 app.use(authRoutes);
 
 app.use(function (req, res, next) {
-	res.send('500: RESOURCE NOT FOUND')
+	res.render('404')
 });
 
 db.connectTODB().then(function () {
