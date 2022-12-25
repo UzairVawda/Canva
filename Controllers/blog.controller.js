@@ -1,24 +1,28 @@
 const Post = require('../Models/BlogPost.model')
 const db = require('../db/database');
+const mongodb = require('mongodb');
+const path = require('path')
 
-
-async function fetchHomePage (req, res, next) {
+async function fetchHomePage(req, res, next) {
     const allPosts = await db.getDB().collection('posts').find({}).toArray();
-
-	res.render('home', {posts : allPosts})
+    allPosts.reverse()
+    res.render('home', { posts: allPosts })
 }
 
-function fetchCreatePost (req,res,next) {
+function fetchCreatePost(req, res, next) {
     res.render('createPost')
 }
 
 async function createPost(req, res, next) {
     const body = req.body;
-    console.log(req.cookies.auth)
-    const url = 'https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=752&q=80'
+    //get the file
+    console.log(req.file)
+    // upload to local 
+    
+    const url = '';
     try {
-        const newPost = new Post(body.title, body.caption, body.body, url, req.cookies.auth)
-        await newPost.uploadPost()  
+        const newPost = new Post(body.title, body.body, url, req.cookies.auth)
+        await newPost.uploadPost()
         res.redirect('/')
     } catch (error) {
         console.log(error)
@@ -26,20 +30,47 @@ async function createPost(req, res, next) {
     }
 }
 
-function fetchEditAndDelete (req,res,next) {
-    res.render('editAndDelete');
+async function fetchEditAndDelete(req, res, next) {
+    let myPosts = [];
+    const allPosts = await db.getDB().collection('posts').find({}).toArray();
+    allPosts.reverse()
+    for (i in allPosts) {
+        if (allPosts[i].userId === req.cookies.auth)
+            myPosts.push(allPosts[i])
+    }
+    res.render('editAndDelete', { posts: myPosts });
 }
 
-function fetchProfile (req,res,next) {
+async function fetchProfile(req, res, next) {
     userName = req.cookies.auth
-    res.render('userProfile', {userName});
+    let myPosts = [];
+    const allPosts = await db.getDB().collection('posts').find({}).toArray();
+    allPosts.reverse()
+    for (i in allPosts) {
+        if (allPosts[i].userId === req.cookies.auth)
+            myPosts.push(allPosts[i])
+    }
+    res.render('userProfile', { userName, posts: myPosts });
+}
+async function deletePost(req, res, next) {
+    const { action, id } = req.params
+    const mongoId = new mongodb.ObjectId(id);
+    if (action === 'delete') {
+        await db.getDB().collection('posts').deleteOne({_id: mongoId}, (err, result) => {
+            if (err){
+                console.log(err)
+            }
+        })
+        res.redirect('/editAndDelete')
+    }
 }
 
 
 module.exports = {
-fetchHomePage : fetchHomePage,
-fetchCreatePost : fetchCreatePost,
-createPost : createPost,
-fetchEditAndDelete : fetchEditAndDelete,
-fetchProfile : fetchProfile
+    fetchHomePage: fetchHomePage,
+    fetchCreatePost: fetchCreatePost,
+    createPost: createPost,
+    fetchEditAndDelete: fetchEditAndDelete,
+    fetchProfile: fetchProfile,
+    deletePost: deletePost
 }

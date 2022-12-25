@@ -6,13 +6,70 @@
 #userProfile {
     color: rgb(40, 92, 161)
 }  
+#pfp-img {
+  border-radius: 50%;
+}
+#img-post {
+  align-self:center;
+}
+.body {
+  width: 100%;
+}
+.like-btn {
+  all: unset;
+  cursor:default;
+}
+.like-btn:hover {
+  cursor:default;
+}
+.p-4 {
+  position: relative;
+  color: #fff;
+}
+.posts {
+  overflow-y: scroll;
+  overflow-x: scroll;
+  display: flex;
+  flex-wrap: wrap;
+}
+.card-body {
+  overflow: scroll;
+}
+.card:hover {
+  box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.3);
+}
 </style>
 
   <body>
 
   <main>
     <%- include('./shared/homeSideNav.ejs') %> 
-    <h1>User<%= userName %></h1>
+    <div class="body p-3 pt-5 text-center">
+      <img id="pfp-img" src="/img/default-pfp.jpeg" alt="profile-picture" style="width:200px">
+      <h1>User<%= userName %></h1>
+      <h2>Bio:....</h2>
+      <h2>Likes:...</h2>
+    </div>
+    <div class="posts text-center">
+      <% for(let x of posts) { %>
+        <div class="p-4">
+          <div class="card px-3 bg-dark" style="width: 30rem;"">
+            <img id="img-post" style="width: 28rem;" src="<%= x.imageURL %> " class="card-img-top pt-3">
+            <div class="card-body">
+              <h5 class="card-title">
+                <%= x.title %>
+              </h5>
+              <p class="card-text">
+                <%= x.summary %>
+              </p>
+              <div>
+                <button class="like-btn pb-2"><i class="fa-solid fa-thumbs-up" onclick="addLike()"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% } %>
+    </div>
   </main>
   <script src="/bootstrap.bundle.min.js"></script>
 

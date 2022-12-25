@@ -19,25 +19,22 @@
 
         <main>
             <%- include('./shared/homeSideNav.ejs') %>
-            <div class="card-body p-5 text-center">
-                <form class="mb-md-5 mt-md-4 pb-5" method="post" action="/create">
+            <div class="card-body pt-5 text-center">
+                <form class="mb-md-5 mt-md-4 pb-5" autocomplete="off" method="post" action="/create" enctype="multipart/form-data">
 
                     <h2 class="fw-bold mb-2">Create a post!</h2>
 
                     <div class="form-outline form-white mb-4">
                         <input type="title" id="title" class="form-control-lg" name="title"
-                        maxlength="18" placeholder="title..." />
-                    </div>
-                    <div class="form-outline form-white mb-4">
-                        <input type="caption" id="caption" class="form-control-lg" name="caption"
-                            placeholder="caption..." />
+                        maxlength="50" placeholder="title..." />
                     </div>
                     <div class="form-outline form-white mb-4">
                         <textarea type="body" id="body" class="form-control-lg" name="body"
-                        maxlength="161" placeholder="say someting..."></textarea>
+                        maxlength="500" placeholder="say someting..."></textarea>
                     </div>
                     <div class="form-outline form-white mb-4">
-                        <input type="file" id="img" name="img" accept="image/*">
+                        <img src="" id="imagePreview">
+                        <input type="file" id="img" name="blogPostImage" accept="image/*" onchange="showPreview(event)">
                     </div> 
                     <div>
                     <button class="btn btn-outline-dark btn-lg px-5" type="submit">Create Post</button>

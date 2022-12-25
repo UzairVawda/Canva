@@ -25,6 +25,7 @@ app.use(cookieSession({
 app.use(express.urlencoded({ extended: false }))
 
 app.use(express.static(path.join(__dirname, 'Public')));
+app.use(express.static(path.join(__dirname, 'uploads')));
 app.use(express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')))
 app.use(express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js')))
 app.use(express.static(path.join(__dirname, 'node_modules/jquery/dist')))

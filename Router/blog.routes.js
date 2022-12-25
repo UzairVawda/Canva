@@ -1,6 +1,15 @@
 const express = require('express')
 const authController = require('../Controllers/auth.controller');
 const blogController = require('../Controllers/blog.controller')
+const multer  = require( 'multer' );
+
+var upload = multer( {
+    dest: 'uploads/',
+    filename: function ( req, file, cb ) {
+        console.log(file.originalname)
+        cb( null, file.originalname);
+    }
+} );
 
 const router = express.Router();
 
@@ -12,9 +21,10 @@ router.get('/editAndDelete', authController.authorize, authController.clearAuthS
 
 router.get('/profile', authController.authorize, authController.clearAuthSessions, blogController.fetchProfile)
 
-
 router.post('/', authController.logout)
 
-router.post('/create', authController.authorize, authController.clearAuthSessions, blogController.createPost)
+router.post('/create', authController.authorize, authController.clearAuthSessions, upload.single('blogPostImage'), blogController.createPost)
+
+router.post('/editAndDelete/:action/:id', authController.authorize, authController.clearAuthSessions, blogController.deletePost, blogController.fetchEditAndDelete)
 
 module.exports = router;
