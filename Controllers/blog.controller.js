@@ -6,7 +6,7 @@ const path = require('path')
 async function fetchHomePage(req, res, next) {
     const allPosts = await db.getDB().collection('posts').find({}).toArray();
     allPosts.reverse()
-    res.render('home', { posts: allPosts })
+    res.render('home', { posts: allPosts, userId: req.cookies.auth})
 }
 
 function fetchCreatePost(req, res, next) {
@@ -15,13 +15,8 @@ function fetchCreatePost(req, res, next) {
 
 async function createPost(req, res, next) {
     const body = req.body;
-    //get the file
-    console.log(req.file)
-    // upload to local 
-    
-    const url = '';
     try {
-        const newPost = new Post(body.title, body.body, url, req.cookies.auth)
+        const newPost = new Post(body.title, body.body, req.file.path, req.cookies.auth)
         await newPost.uploadPost()
         res.redirect('/')
     } catch (error) {
@@ -42,7 +37,7 @@ async function fetchEditAndDelete(req, res, next) {
 }
 
 async function fetchProfile(req, res, next) {
-    userName = req.cookies.auth
+    const userName = req.cookies.auth
     let myPosts = [];
     const allPosts = await db.getDB().collection('posts').find({}).toArray();
     allPosts.reverse()
@@ -56,8 +51,8 @@ async function deletePost(req, res, next) {
     const { action, id } = req.params
     const mongoId = new mongodb.ObjectId(id);
     if (action === 'delete') {
-        await db.getDB().collection('posts').deleteOne({_id: mongoId}, (err, result) => {
-            if (err){
+        await db.getDB().collection('posts').deleteOne({ _id: mongoId }, (err, result) => {
+            if (err) {
                 console.log(err)
             }
         })
@@ -65,6 +60,44 @@ async function deletePost(req, res, next) {
     }
 }
 
+async function likePost(req, res) {
+    const userName = req.cookies.auth
+    const mongoId = new mongodb.ObjectId(req.params.id);
+    let post = await db.getDB().collection('posts').findOne({_id: mongoId})
+    let alreadyLiked = false
+    console.log(post)
+    console.log(post.likedUsers)
+    for (user of post.likedUsers) {
+        if (user === userName) {
+            alreadyLiked = true
+        }
+    }
+    if (alreadyLiked === true) {
+        await db.getDB().collection('posts').findOneAndUpdate({ _id: mongoId }, {
+            $inc: {
+                likeCount: -1
+            },
+            $pull: {
+                likedUsers: userName
+            }
+        })
+        post = await db.getDB().collection('posts').findOne({_id: mongoId})
+        res.json({ message: 'success', likeCount: post.likeCount, action: 'unliked'})
+    }
+    else {
+        await db.getDB().collection('posts').findOneAndUpdate({ _id: mongoId }, {
+            $inc: {
+                likeCount: 1
+            },
+            $push: {
+                likedUsers: userName
+            }
+        })
+        post = await db.getDB().collection('posts').findOne({_id: mongoId})
+        res.json({ message: 'success', likeCount: post.likeCount, action: 'liked'})
+    }
+
+}
 
 module.exports = {
     fetchHomePage: fetchHomePage,
@@ -72,5 +105,6 @@ module.exports = {
     createPost: createPost,
     fetchEditAndDelete: fetchEditAndDelete,
     fetchProfile: fetchProfile,
-    deletePost: deletePost
+    deletePost: deletePost,
+    likePost: likePost
 }

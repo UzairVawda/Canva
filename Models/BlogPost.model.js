@@ -2,13 +2,11 @@ const db = require('../db/database');
 
 class BlogPost {
 
-    constructor(title, summary, imageURL, userId, likeCount, comments) {
+    constructor(title, summary, imageURL, userId,) {
         this.title = title
         this.summary = summary 
         this.imageURL = imageURL
         this.userId = userId
-        this.likeCount = likeCount
-        this.comments = comments
     }
 
     async uploadPost() {
@@ -18,6 +16,7 @@ class BlogPost {
             imageURL : this.imageURL,
             userId : this.userId,
             likeCount : 0,
+            likedUsers : [],
             comments : {}
         })
     }

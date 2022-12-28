@@ -3,13 +3,16 @@ const authController = require('../Controllers/auth.controller');
 const blogController = require('../Controllers/blog.controller')
 const multer  = require( 'multer' );
 
-var upload = multer( {
-    dest: 'uploads/',
-    filename: function ( req, file, cb ) {
-        console.log(file.originalname)
-        cb( null, file.originalname);
+const uploadConfig = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, 'uploads')
+    },
+    filename: function(req, file, cb) {
+        cb(null, new Date + file.originalname)
     }
-} );
+})
+
+const upload = multer({ storage: uploadConfig })
 
 const router = express.Router();
 
@@ -26,5 +29,7 @@ router.post('/', authController.logout)
 router.post('/create', authController.authorize, authController.clearAuthSessions, upload.single('blogPostImage'), blogController.createPost)
 
 router.post('/editAndDelete/:action/:id', authController.authorize, authController.clearAuthSessions, blogController.deletePost, blogController.fetchEditAndDelete)
+
+router.post('/like/:id', blogController.likePost)
 
 module.exports = router;
