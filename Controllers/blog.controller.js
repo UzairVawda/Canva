@@ -16,7 +16,7 @@ function fetchCreatePost(req, res, next) {
 async function createPost(req, res, next) {
     const body = req.body;
     try {
-        const newPost = new Post(body.title, body.body, req.file.path, req.cookies.auth)
+        const newPost = new Post(body.title, body.body, req.file.path, req.cookies.auth, 0, [], {})
         await newPost.uploadPost()
         res.redirect('/')
     } catch (error) {
@@ -45,7 +45,7 @@ async function fetchProfile(req, res, next) {
         if (allPosts[i].userId === req.cookies.auth)
             myPosts.push(allPosts[i])
     }
-    res.render('userProfile', { userName, posts: myPosts });
+    res.render('userProfile', { userName, posts: myPosts, userId: req.cookies.auth });
 }
 async function deletePost(req, res, next) {
     const { action, id } = req.params
@@ -62,11 +62,15 @@ async function deletePost(req, res, next) {
 
 async function likePost(req, res) {
     const userName = req.cookies.auth
-    const mongoId = new mongodb.ObjectId(req.params.id);
+    let mongoId;
+    try {
+        mongoId = new mongodb.ObjectId(req.params.id);
+    } catch (error) {
+        res.json({ message: 'failed', errorMessage: error})
+    }
+
     let post = await db.getDB().collection('posts').findOne({_id: mongoId})
     let alreadyLiked = false
-    console.log(post)
-    console.log(post.likedUsers)
     for (user of post.likedUsers) {
         if (user === userName) {
             alreadyLiked = true
@@ -82,6 +86,7 @@ async function likePost(req, res) {
             }
         })
         post = await db.getDB().collection('posts').findOne({_id: mongoId})
+        console.log(post);
         res.json({ message: 'success', likeCount: post.likeCount, action: 'unliked'})
     }
     else {
@@ -94,6 +99,7 @@ async function likePost(req, res) {
             }
         })
         post = await db.getDB().collection('posts').findOne({_id: mongoId})
+        console.log(post);
         res.json({ message: 'success', likeCount: post.likeCount, action: 'liked'})
     }
 

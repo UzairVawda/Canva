@@ -1,0 +1,43 @@
+#userProfile {
+    color: rgb(40, 92, 161)
+}  
+#pfp-img {
+  border-radius: 50%;
+}
+#img-post {
+  align-self:center;
+}
+.body {
+  width: 100%;
+}
+.like-btn {
+  all: unset;
+  cursor:default;
+}
+.like-btn:hover {
+  cursor:default;
+}
+.p-4 {
+  position: relative;
+  color: #fff;
+}
+.posts {
+  overflow-y: scroll;
+  display: flex;
+  flex-wrap: wrap;
+}
+.card-body {
+  overflow: scroll;
+}
+.card:hover {
+  box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.3);
+}
+.liked {
+  color:rgb(40, 92, 161)
+}
+#like {
+  display: inline-flex;
+}
+#likeCount {
+  display: inline-flex;
+}

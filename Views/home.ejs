@@ -3,45 +3,7 @@
   <script src="/js/home.js"></script>
   <title>Canva!</title>
   </head>
-  <style>
-    #feed {
-      color: rgb(40, 92, 161)
-    }
-    .like-btn {
-      all: unset;
-      cursor: pointer;
-    }
-    .p-4 {
-      position: relative;
-      color: #fff;
-    }
-    .card {
-      margin:auto
-    }
-    .posts {
-      width: 100%;
-      overflow-y: scroll;
-      overflow-x: scroll;
-    }
-    img {
-      align-self:center;
-    }
-    button:hover{
-      color:rgb(40, 92, 161)
-    }
-    .liked {
-      color:rgb(40, 92, 161)
-    }
-    #like {
-      display: inline-flex;
-    }
-    #likeCount {
-      display: inline-flex;
-    }
-  </style>
-
   <body>
-
     <main>
       <%- include('./shared/homeSideNav.ejs') %>
       <div class="posts text-center">
@@ -49,7 +11,7 @@
           <div class="p-4">
             <div class="card px-3 pt-3 bg-dark" style="width: 500px;">
               <p>Posted by <%= x.userId %></p>
-              <img style="max-width: 400px;" src="<%= x.imageURL %>" class="card-img-top pt-3">
+              <img style="max-width: 28rem;" src="<%= x.imageURL %>" class="card-img-top">
               <div class="card-body">
                 <h5 class="card-title"><%= x.title %></h5>
                 <p class="card-text"><%= x.summary %></p>
@@ -66,7 +28,6 @@
           </div>
         <% } %>
       </div>
- 
     </main>
   </body>
   <script src="/bootstrap.bundle.min.js"></script>

@@ -1,46 +1,7 @@
+<link href="/css/editAndDelete.css" rel="stylesheet">
 <%- include('./shared/head.ejs') %>
-  <link href="/css/home.css" rel="stylesheet">
   <title>Canva!</title>
   </head>
-  <style>
-    #editAndDelete {
-      color: rgb(40, 92, 161);
-    }
-
-    .like-btn {
-      all: unset;
-      cursor: pointer;
-    }
-
-    .p-4 {
-      position: relative;
-      color: #fff;
-    }
-
-    .posts {
-      width: 100%;
-      overflow-y: scroll;
-      overflow-x: scroll;
-      display: flex;
-      flex-wrap: wrap;
-    }
-    #edit-btn{
-      float:left;
-    }
-    #del-btn {
-      float: right;
-    }
-    button:hover{
-      color: rgb(40, 92, 161);
-    }
-    .card-body {
-      overflow: scroll;
-    }
-    .card:hover {
-      box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.3);
-    }
-  </style>
-
   <body>
 
     <main>
@@ -49,7 +10,7 @@
         <% for(let x of posts) { %>
           <div class="p-4">
             <div class="card px-3 bg-dark" style="width: 18rem;height:35rem;">
-              <img style="width: 16rem; height: 16rem;" src="<%= x.imageURL %> " class="card-img-top pt-3">
+              <img src="<%= x.imageURL %> " class="card-img-top pt-3">
               <div class="card-body">
                 <h5 class="card-title">
                   <%= x.title %>

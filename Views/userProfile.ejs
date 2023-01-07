@@ -1,45 +1,9 @@
 <%- include('./shared/head.ejs') %> 
-<link href="/css/home.css" rel="stylesheet">
+<link href="/css/userProfile.css" rel="stylesheet">
 <title>Canva!</title>
 </head>
-<style>
-#userProfile {
-    color: rgb(40, 92, 161)
-}  
-#pfp-img {
-  border-radius: 50%;
-}
-#img-post {
-  align-self:center;
-}
-.body {
-  width: 100%;
-}
-.like-btn {
-  all: unset;
-  cursor:default;
-}
-.like-btn:hover {
-  cursor:default;
-}
-.p-4 {
-  position: relative;
-  color: #fff;
-}
-.posts {
-  overflow-y: scroll;
-  display: flex;
-  flex-wrap: wrap;
-}
-.card-body {
-  overflow: scroll;
-}
-.card:hover {
-  box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.3);
-}
-</style>
 
-  <body>
+<body>
 
   <main>
     <%- include('./shared/homeSideNav.ejs') %> 
@@ -62,7 +26,12 @@
                 <%= x.summary %>
               </p>
               <div>
-                <button class="like-btn pb-2"><i class="fa-solid fa-thumbs-up"`></i></button>
+                <% if (x.likedUsers.includes(userId)) { %>
+                  <button class="like-btn pb-2 liked" id="like" data-blogid="<%= x._id %>"><i class="fa-solid fa-thumbs-up"></i></button>
+                <% } else { %>
+                  <button class="like-btn pb-2" id="like" data-blogid="<%= x._id %>"><i class="fa-solid fa-thumbs-up"></i></button>
+                <% } %> 
+                <p id="likeCount"><%= x.likeCount %></p>
               </div>
             </div>
           </div>
@@ -73,5 +42,5 @@
   <script src="/bootstrap.bundle.min.js"></script>
 
   <script src="/js/home.js"></script>
-  </body>
-</html>
+</body>
+

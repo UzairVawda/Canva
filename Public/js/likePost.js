@@ -1,25 +1,20 @@
 const allLikeBtn = document.querySelectorAll(".like-btn")
-const likeCountField = document.getElementById("likeCount")
-
 
 async function likePost(event) {
     const blogid = event.target.parentElement.dataset.blogid
-    console.log(blogid)
     const response = await fetch(`/like/${blogid}`, {
         method: 'POST'
     });
+
     const res = await response.json()
-    console.log(res)
-    element = document.getElementById("like");
+    const element = event.target.parentElement ;
     if (res.action === 'liked') {
         element.classList.add('liked');
-        console.log('hi')
     }
     if (res.action === 'unliked') {
         element.classList.remove('liked');
-        console.log('hi')
     }
-    likeCountField.innerHTML = res.likeCount
+    event.target.parentElement.nextElementSibling.innerHTML = res.likeCount
 
 }
 console.log(allLikeBtn)
