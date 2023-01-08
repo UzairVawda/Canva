@@ -1,4 +1,4 @@
-#createPost {
+#editAndDelete {
     color: rgb(40, 92, 161);
     text-align: center;
 }
@@ -11,4 +11,7 @@ textarea {
 #imagePreview{
     height:35px;
     width: 35px;
+}
+body {
+    background-color: rgb(40, 92, 161);
 }

@@ -2,6 +2,7 @@ const Post = require('../Models/BlogPost.model')
 const db = require('../db/database');
 const mongodb = require('mongodb');
 const path = require('path')
+const fs = require('fs');
 
 async function fetchHomePage(req, res, next) {
     const allPosts = await db.getDB().collection('posts').find({}).toArray();
@@ -50,14 +51,31 @@ async function fetchProfile(req, res, next) {
 async function deletePost(req, res, next) {
     const { action, id } = req.params
     const mongoId = new mongodb.ObjectId(id);
+    const post = await db.getDB().collection('posts').findOne({_id: mongoId})
+    if (action === 'edit') {
+        res.render('editPostModal', { post: post })
+    }
     if (action === 'delete') {
         await db.getDB().collection('posts').deleteOne({ _id: mongoId }, (err, result) => {
             if (err) {
                 console.log(err)
             }
+            else {
+                fs.unlinkSync(post.imageURL)
+            }
         })
         res.redirect('/editAndDelete')
     }
+}
+async function updatePost(req,res,next) {
+    const mongoId = new mongodb.ObjectId(req.params.id);
+    let post = await db.getDB().collection('posts').findOneAndUpdate({ _id: mongoId }, {
+        $set: {
+            blogTitle: req.body.title,
+            summary: req.body.body
+        }
+    })
+    res.redirect('/editAndDelete')
 }
 
 async function likePost(req, res) {
@@ -86,7 +104,6 @@ async function likePost(req, res) {
             }
         })
         post = await db.getDB().collection('posts').findOne({_id: mongoId})
-        console.log(post);
         res.json({ message: 'success', likeCount: post.likeCount, action: 'unliked'})
     }
     else {
@@ -99,7 +116,6 @@ async function likePost(req, res) {
             }
         })
         post = await db.getDB().collection('posts').findOne({_id: mongoId})
-        console.log(post);
         res.json({ message: 'success', likeCount: post.likeCount, action: 'liked'})
     }
 
@@ -112,5 +128,6 @@ module.exports = {
     fetchEditAndDelete: fetchEditAndDelete,
     fetchProfile: fetchProfile,
     deletePost: deletePost,
-    likePost: likePost
+    likePost: likePost,
+    updatePost : updatePost
 }

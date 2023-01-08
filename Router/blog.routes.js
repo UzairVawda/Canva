@@ -30,6 +30,8 @@ router.post('/create', authController.authorize, authController.clearAuthSession
 
 router.post('/editAndDelete/:action/:id', authController.authorize, authController.clearAuthSessions, blogController.deletePost, blogController.fetchEditAndDelete)
 
+router.post('/updatePost/:id', authController.authorize, authController.clearAuthSessions, blogController.updatePost)
+
 router.post('/like/:id', blogController.likePost)
 
 module.exports = router;

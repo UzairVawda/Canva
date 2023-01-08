@@ -13,14 +13,14 @@
               <img src="<%= x.imageURL %> " class="card-img-top pt-3">
               <div class="card-body">
                 <h5 class="card-title">
-                  <%= x.title %>
+                  <%= x.blogTitle %>
                 </h5>
                 <p class="card-text">
                   <%= x.summary %>
                 </p>
               </div>
               <div class="pt-2">
-                <form id="edit-btn">
+                <form id="edit-btn" method="post" action="/editAndDelete/edit/<%= x._id %>">
                   <button class="like-btn pb-2"><i class="fa-solid fa-pen-to-square"></i></button>
                 </form>
                 <form id="del-btn" method="post" action="/editAndDelete/delete/<%= x._id %>">
