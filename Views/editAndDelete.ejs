@@ -1,5 +1,5 @@
-<link href="/css/editAndDelete.css" rel="stylesheet">
 <%- include('./shared/head.ejs') %>
+<link href="/css/editAndDelete.css" rel="stylesheet">
   <title>Canva!</title>
   </head>
   <body>
@@ -7,28 +7,32 @@
     <main>
       <%- include('./shared/homeSideNav.ejs') %>
       <div class="posts">
-        <% for(let x of posts) { %>
-          <div class="p-4">
-            <div class="card px-3 bg-dark" style="width: 18rem;height:35rem;">
-              <img src="<%= x.imageURL %> " class="card-img-top pt-3">
-              <div class="card-body">
-                <h5 class="card-title">
-                  <%= x.blogTitle %>
-                </h5>
-                <p class="card-text">
-                  <%= x.summary %>
-                </p>
-              </div>
-              <div class="pt-2">
-                <form id="edit-btn" method="post" action="/editAndDelete/edit/<%= x._id %>">
-                  <button class="like-btn pb-2"><i class="fa-solid fa-pen-to-square"></i></button>
-                </form>
-                <form id="del-btn" method="post" action="/editAndDelete/delete/<%= x._id %>">
-                  <button class="like-btn pb-2 align-right"><i class="fa-sharp fa-solid fa-trash" data-toggle="modal" data-target="#exampleModal"></i></button>
-                </form>
+        <% if (posts.length > 0) { %>
+          <% for(let x of posts) { %>
+            <div class="p-4">
+              <div class="card px-3 bg-dark text-center" style="height: 30rem; width: 25rem;">
+                <img src="<%= x.imageURL %> " style="max-height: 20rem;" class="card-img-top pt-3">
+                <div class="card-body">
+                  <h5 class="card-title">
+                    <%= x.blogTitle %>
+                  </h5>
+                  <p class="card-text">
+                    <%= x.summary %>
+                  </p>
+                </div>
+                <div class="pt-2">
+                  <form id="edit-btn" method="post" action="/editAndDelete/edit/<%= x._id %>">
+                    <button class="like-btn pb-2"><i class="fa-solid fa-pen-to-square"></i></button>
+                  </form>
+                  <form id="del-btn" method="post" action="/editAndDelete/delete/<%= x._id %>">
+                    <button class="like-btn pb-2 align-right"><i class="fa-sharp fa-solid fa-trash" data-toggle="modal" data-target="#exampleModal"></i></button>
+                  </form>
+                </div>
               </div>
             </div>
-          </div>
+          <% } %>
+        <% }else { %>
+          <h1 id="no-post-text">You haven't created any posts.</h1>
         <% } %>
     </main>
     <script src="/bootstrap.bundle.min.js"></script>

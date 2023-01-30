@@ -38,7 +38,8 @@ async function fetchEditAndDelete(req, res, next) {
 }
 
 async function fetchProfile(req, res, next) {
-    const userName = req.cookies.auth
+    let mongoId = new mongodb.ObjectId(req.cookies.auth);
+    const user = await db.getDB().collection('user').findOne({_id: mongoId})
     let myPosts = [];
     const allPosts = await db.getDB().collection('posts').find({}).toArray();
     allPosts.reverse()
@@ -46,7 +47,8 @@ async function fetchProfile(req, res, next) {
         if (allPosts[i].userId === req.cookies.auth)
             myPosts.push(allPosts[i])
     }
-    res.render('userProfile', { userName, posts: myPosts, userId: req.cookies.auth });
+    console.log(user);
+    res.render('userProfile', { posts: myPosts, user : user });
 }
 async function deletePost(req, res, next) {
     const { action, id } = req.params
@@ -69,7 +71,7 @@ async function deletePost(req, res, next) {
 }
 async function updatePost(req,res,next) {
     const mongoId = new mongodb.ObjectId(req.params.id);
-    let post = await db.getDB().collection('posts').findOneAndUpdate({ _id: mongoId }, {
+    await db.getDB().collection('posts').findOneAndUpdate({ _id: mongoId }, {
         $set: {
             blogTitle: req.body.title,
             summary: req.body.body
@@ -121,6 +123,22 @@ async function likePost(req, res) {
 
 }
 
+async function eidtProfile(req,res,next) {
+    const mongoId = new mongodb.ObjectId(req.cookies.auth);
+    const user = await db.getDB().collection('user').findOne({_id: mongoId})
+    res.render('editProfile', { user : user })
+}
+
+async function updateProfile(req,res,next) {
+    const body = req.body
+    const mongoId = new mongodb.ObjectId(req.cookies.auth);
+    await db.getDB().collection('user').findOneAndUpdate({ _id: mongoId }, {
+        $set: {
+            userName : body.username
+        }
+    })
+    res.redirect('/profile')
+}
 module.exports = {
     fetchHomePage: fetchHomePage,
     fetchCreatePost: fetchCreatePost,
@@ -129,5 +147,7 @@ module.exports = {
     fetchProfile: fetchProfile,
     deletePost: deletePost,
     likePost: likePost,
-    updatePost : updatePost
+    updatePost : updatePost,
+    eidtProfile : eidtProfile,
+    updateProfile : updateProfile
 }

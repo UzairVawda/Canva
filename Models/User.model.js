@@ -2,15 +2,19 @@ const db = require('../db/database');
 
 class User {
 
-    constructor(userEmail, userPassword) {
+    constructor(userEmail, userPassword, userProfileImage, userName) {
         this.email = userEmail
         this.password = userPassword
+        this.userProfileImage = this.userProfileImage
+        this.userName = this.userName
     }
 
     async signupUser() {
         await db.getDB().collection('user').insertOne({
             email : this.email,
-            password : this.password
+            password : this.password,
+            userProfileImage : 'img/default-pfp.jpeg',
+            userName : ''
         })
     }
 

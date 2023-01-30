@@ -24,6 +24,7 @@ router.get('/editAndDelete', authController.authorize, authController.clearAuthS
 
 router.get('/profile', authController.authorize, authController.clearAuthSessions, blogController.fetchProfile)
 
+
 router.post('/', authController.logout)
 
 router.post('/create', authController.authorize, authController.clearAuthSessions, upload.single('blogPostImage'), blogController.createPost)
@@ -33,5 +34,9 @@ router.post('/editAndDelete/:action/:id', authController.authorize, authControll
 router.post('/updatePost/:id', authController.authorize, authController.clearAuthSessions, blogController.updatePost)
 
 router.post('/like/:id', blogController.likePost)
+
+router.post('/editProfile', authController.authorize, authController.clearAuthSessions, blogController.eidtProfile)
+
+router.post('/updateProfile', authController.authorize, authController.clearAuthSessions, upload.single('profile-image'), blogController.updateProfile)
 
 module.exports = router;

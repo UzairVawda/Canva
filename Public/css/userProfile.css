@@ -7,9 +7,6 @@
 #img-post {
   align-self:center;
 }
-.body {
-  width: 100%;
-}
 .like-btn {
   all: unset;
   cursor:default;
@@ -22,12 +19,8 @@
   color: #fff;
 }
 .posts {
-  overflow-y: scroll;
   display: flex;
   flex-wrap: wrap;
-}
-.card-body {
-  overflow: scroll;
 }
 .card:hover {
   box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.3);
@@ -40,4 +33,11 @@
 }
 #likeCount {
   display: inline-flex;
+}
+.body {
+  overflow: scroll;
+  width: 100%;
+}
+.card {
+  overflow: scroll;
 }

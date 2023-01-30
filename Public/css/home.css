@@ -32,3 +32,6 @@
   #likeCount {
     display: inline-flex;
   }
+  #no-post-text {
+    margin: auto;
+  }

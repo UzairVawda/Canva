@@ -28,9 +28,12 @@
   button:hover{
     color: rgb(40, 92, 161);
   }
-  .card-body {
+  .card {
     overflow: scroll;
   }
   .card:hover {
     box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.3);
+  }
+  #no-post-text {
+    margin: auto;
   }

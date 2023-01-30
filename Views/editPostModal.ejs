@@ -3,14 +3,13 @@
     <title>Canva!</title>
     </head>
     <body>
-
         <main>
             <%- include('./shared/homeSideNav.ejs') %>
             <div class="card-body pt-5 text-center">
                 <form class="mb-2 md-5 mt-md-4" autocomplete="off" method="post" action="/updatePost/<%= post._id %>">
 
                     <h2 class="fw-bold mb-2">Edit Post</h2>
-                    <img src="<%= post.imageURL %>">
+                    <img src="uploads/Sun Jan 08 2023 16:20:17 GMT-0500 (Eastern Standard Time)932F3789-CB81-41C8-A5DD-909FD21D3BF2.jpg">
                     <div class="form-outline form-white mb-4">
                         <input type="title" id="title" class="form-control-lg" name="title"
                         maxlength="50" placeholder="title..." value="<%= post.blogTitle %>"/>
