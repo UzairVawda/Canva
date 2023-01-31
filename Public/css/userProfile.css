@@ -41,3 +41,12 @@
 .card {
   overflow: scroll;
 }
+#no-post-msg {
+  margin:auto;
+  font-size: 2rem;
+}
+#break {
+  top: 20px;
+  height: 8px;
+  margin-bottom: 50px;
+}

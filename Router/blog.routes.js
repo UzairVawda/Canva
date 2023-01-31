@@ -24,6 +24,8 @@ router.get('/editAndDelete', authController.authorize, authController.clearAuthS
 
 router.get('/profile', authController.authorize, authController.clearAuthSessions, blogController.fetchProfile)
 
+router.get('/userProfileImage', authController.authorize, authController.clearAuthSessions, blogController.getUserProfileImage)
+
 
 router.post('/', authController.logout)
 
@@ -37,6 +39,7 @@ router.post('/like/:id', blogController.likePost)
 
 router.post('/editProfile', authController.authorize, authController.clearAuthSessions, blogController.eidtProfile)
 
-router.post('/updateProfile', authController.authorize, authController.clearAuthSessions, upload.single('profile-image'), blogController.updateProfile)
+router.post('/updateProfile', authController.authorize, authController.clearAuthSessions, upload.single('user-profile-image'), blogController.updateProfile)
 
-module.exports = router;
+
+module.exports = router

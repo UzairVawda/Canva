@@ -4,6 +4,13 @@ const mongodb = require('mongodb');
 const path = require('path')
 const fs = require('fs');
 
+async function getUserProfileImage(req,res,next){
+    const mongoId = new mongodb.ObjectId(req.cookies.auth);
+    const profile = await db.getDB().collection('user').findOne({_id: mongoId})
+
+    res.json({ userProfileImage : profile.userProfileImage })
+}
+
 async function fetchHomePage(req, res, next) {
     const allPosts = await db.getDB().collection('posts').find({}).toArray();
     allPosts.reverse()
@@ -48,7 +55,7 @@ async function fetchProfile(req, res, next) {
             myPosts.push(allPosts[i])
     }
     console.log(user);
-    res.render('userProfile', { posts: myPosts, user : user });
+    res.render('userProfile', { userId: req.cookies.auth, posts: myPosts, user : user });
 }
 async function deletePost(req, res, next) {
     const { action, id } = req.params
@@ -132,12 +139,28 @@ async function eidtProfile(req,res,next) {
 async function updateProfile(req,res,next) {
     const body = req.body
     const mongoId = new mongodb.ObjectId(req.cookies.auth);
-    await db.getDB().collection('user').findOneAndUpdate({ _id: mongoId }, {
-        $set: {
-            userName : body.username
-        }
-    })
-    res.redirect('/profile')
+    const profile = await db.getDB().collection('user').findOne({_id: mongoId})
+    try {
+        await db.getDB().collection('user').findOneAndUpdate({ _id: mongoId }, {
+            $set: {
+                userName : body.username,
+                userProfileImage: req.file.path
+            }
+        },(err, result) => {
+            if (err) {
+                console.log(err)
+            }
+            else {
+                fs.unlinkSync(profile.userProfileImage)
+            }
+        })    
+        res.redirect('/profile')
+    }
+    catch (error) {
+        console.log(error)
+        res.redirect('/profile')
+    }
+
 }
 module.exports = {
     fetchHomePage: fetchHomePage,
@@ -149,5 +172,6 @@ module.exports = {
     likePost: likePost,
     updatePost : updatePost,
     eidtProfile : eidtProfile,
-    updateProfile : updateProfile
+    updateProfile : updateProfile,
+    getUserProfileImage : getUserProfileImage
 }
