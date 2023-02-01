@@ -10,7 +10,10 @@
           <% for(let x of posts) { %>
             <div class="p-4">
               <div class="card px-3 pt-3 bg-dark" style="width: 500px;">
-                <p class="userName" data-userId="<%= x.userId %>"></p>
+                <div class="userData">
+                  <img id="pfp" src="" />
+                  <p id="userName" data-userId="<%= x.userId %>"></p>
+                </div>
                 <img style="max-width: 28rem;" src="<%= x.imageURL %>" class="card-img-top">
                 <div class="card-body">
                   <h5 class="card-title"><%= x.blogTitle %></h5>

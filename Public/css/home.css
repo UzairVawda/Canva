@@ -35,3 +35,16 @@
   #no-post-text {
     margin: auto;
   }
+  #pfp {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+  }
+  .userData {
+    display: flex;
+    margin-bottom: 10px;
+  }
+  #userName {
+    margin-top: 9px;
+    margin-left: 5px;
+  }

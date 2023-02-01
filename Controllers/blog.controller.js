@@ -14,8 +14,9 @@ async function getUserName(req,res,next) {
     const mongoId = new mongodb.ObjectId(req.params.id);
     const profile = await db.getDB().collection('user').findOne({_id: mongoId})
     const userName = profile.userName
+    const userProfileImage = profile.userProfileImage
 
-    res.json({ userName : userName })
+    res.json({ userName : userName, userProfileImage : userProfileImage })
 }
 
 async function fetchHomePage(req, res, next) {
