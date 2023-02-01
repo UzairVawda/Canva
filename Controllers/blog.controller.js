@@ -1,7 +1,6 @@
 const Post = require('../Models/BlogPost.model')
 const db = require('../db/database');
 const mongodb = require('mongodb');
-const path = require('path')
 const fs = require('fs');
 
 async function getUserProfileImage(req,res,next){
@@ -11,10 +10,18 @@ async function getUserProfileImage(req,res,next){
     res.json({ userProfileImage : profile.userProfileImage })
 }
 
+async function getUserName(req,res,next) {
+    const mongoId = new mongodb.ObjectId(req.params.id);
+    const profile = await db.getDB().collection('user').findOne({_id: mongoId})
+    const userName = profile.userName
+
+    res.json({ userName : userName })
+}
+
 async function fetchHomePage(req, res, next) {
     const allPosts = await db.getDB().collection('posts').find({}).toArray();
     allPosts.reverse()
-    res.render('home', { posts: allPosts, userId: req.cookies.auth})
+    res.render('home', { userName : '1234', posts: allPosts, userId: req.cookies.auth})
 }
 
 function fetchCreatePost(req, res, next) {
@@ -141,20 +148,31 @@ async function updateProfile(req,res,next) {
     const mongoId = new mongodb.ObjectId(req.cookies.auth);
     const profile = await db.getDB().collection('user').findOne({_id: mongoId})
     try {
-        await db.getDB().collection('user').findOneAndUpdate({ _id: mongoId }, {
-            $set: {
-                userName : body.username,
-                userProfileImage: req.file.path
-            }
-        },(err, result) => {
-            if (err) {
-                console.log(err)
-            }
-            else {
-                fs.unlinkSync(profile.userProfileImage)
-            }
-        })    
-        res.redirect('/profile')
+        if (body.username) {
+            await db.getDB().collection('user').findOneAndUpdate({ _id: mongoId }, {
+                $set: {
+                    userName: body.username
+                }
+            },(err, result) => {
+                if (err) {
+                    console.log(err)
+                }
+            })    
+        }
+        if (req.file.path)
+            await db.getDB().collection('user').findOneAndUpdate({ _id: mongoId }, {
+                $set: {
+                    userProfileImage: req.file.path
+                }
+            },(err, result) => {
+                if (err) {
+                    console.log(err)
+                }
+                else {
+                    fs.unlinkSync(profile.userProfileImage)
+                }
+            })    
+            res.redirect('/profile')
     }
     catch (error) {
         console.log(error)
@@ -173,5 +191,6 @@ module.exports = {
     updatePost : updatePost,
     eidtProfile : eidtProfile,
     updateProfile : updateProfile,
-    getUserProfileImage : getUserProfileImage
+    getUserProfileImage : getUserProfileImage,
+    getUserName : getUserName
 }

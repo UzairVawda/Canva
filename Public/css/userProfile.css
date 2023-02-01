@@ -50,3 +50,11 @@
   height: 8px;
   margin-bottom: 50px;
 }
+#pfp-img {
+  border:5px solid rgb(33,37,40);
+  width:200px; 
+  height:200px;
+}
+hr {
+  color: rgb(33,37,40);
+}

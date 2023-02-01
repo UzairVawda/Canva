@@ -17,7 +17,6 @@ async function likePost(event) {
     event.target.parentElement.nextElementSibling.innerHTML = res.likeCount
 
 }
-console.log(allLikeBtn)
 for (const likeBtn of allLikeBtn) {
     likeBtn.addEventListener('click', likePost)
 }

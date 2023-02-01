@@ -1,6 +1,5 @@
 <%- include('./shared/head.ejs') %>
   <link href="/css/home.css" rel="stylesheet">
-  <script src="/js/home.js"></script>
   <title>Canva!</title>
   </head>
   <body>
@@ -11,7 +10,7 @@
           <% for(let x of posts) { %>
             <div class="p-4">
               <div class="card px-3 pt-3 bg-dark" style="width: 500px;">
-                <p>Posted by <%= x.userId %></p>
+                <p class="userName" data-userId="<%= x.userId %>"></p>
                 <img style="max-width: 28rem;" src="<%= x.imageURL %>" class="card-img-top">
                 <div class="card-body">
                   <h5 class="card-title"><%= x.blogTitle %></h5>
@@ -35,5 +34,7 @@
     </main>
   </body>
   <script src="/bootstrap.bundle.min.js"></script>
+  <script src="/js/home.js"></script>
+  <script src="/js/getUserNames.js"></script>
   <script src="/js/likePost.js"></script>
   </html>

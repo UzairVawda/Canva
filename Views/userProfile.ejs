@@ -12,7 +12,7 @@
         <button class="m-2" title="Edit profile" data-bs-toggle="tooltip"><i class="fa-solid fa-user-pen"></i></button>
       </form>
       <div class="p-3 pt-5 text-center">
-        <img id="pfp-img" src="<%= user.userProfileImage %>" alt="profile-picture" style="width:200px; height:200px;">
+        <img id="pfp-img" src="<%= user.userProfileImage %>" alt="profile-picture">
         <% if (user.userName) { %>
           <h1><%= user.userName %></h1>
         <% } else { %>

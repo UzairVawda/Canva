@@ -41,5 +41,6 @@ router.post('/editProfile', authController.authorize, authController.clearAuthSe
 
 router.post('/updateProfile', authController.authorize, authController.clearAuthSessions, upload.single('user-profile-image'), blogController.updateProfile)
 
+router.post('/getUserName/:id', authController.authorize, authController.clearAuthSessions, blogController.getUserName)
 
 module.exports = router
