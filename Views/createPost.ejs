@@ -3,7 +3,6 @@
     <title>Canva!</title>
     </head>
     <body>
-
         <main>
             <%- include('./shared/homeSideNav.ejs') %>
             <div class="card-body pt-5 text-center">
@@ -20,7 +19,7 @@
                         maxlength="500" placeholder="say someting..."></textarea>
                     </div>
                     <div class="form-outline form-white mb-4">
-                        <img src="" id="imagePreview">
+                        <img src="img/noimg.png" id="imagePreview">
                         <input type="file" id="img" name="blogPostImage" accept="image/*" onchange="showPreview(event)">
                     </div> 
                     <div>
@@ -32,4 +31,5 @@
         <script src="/bootstrap.bundle.min.js"></script>
 
         <script src="/js/home.js"></script>
+        <script src="/js/sideNav.js"></script>
     </body>

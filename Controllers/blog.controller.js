@@ -7,7 +7,7 @@ async function getUserProfileImage(req,res,next){
     const mongoId = new mongodb.ObjectId(req.cookies.auth);
     const profile = await db.getDB().collection('user').findOne({_id: mongoId})
 
-    res.json({ userProfileImage : profile.userProfileImage })
+    res.json({ userProfileImg : profile.userProfileImage })
 }
 
 async function getUserName(req,res,next) {

@@ -1,8 +1,8 @@
-async function getUserNames() {
+async function getUserData() {
     const userNames = document.getElementsByClassName("userData")
     for (user of userNames) {
-        userProfileImageElement = user.children[0]
-        userNameElement = user.children[1]
+        const userProfileImageElement = user.children[0]
+        const userNameElement = user.children[1]
         const userId = userNameElement.dataset.userid
         const response = await fetch(`/getUserName/${userId}`, {
             method: 'POST'
@@ -15,6 +15,11 @@ async function getUserNames() {
         userProfileImageElement.src = userProfileImage
         userNameElement.innerHTML = (userName)
     }
+    const response = await fetch('/userProfileImage', {
+        method: 'GET'
+    });
+    const res = await response.json()
+    document.getElementById("userProfileImg").src = `${res.userProfileImg}`;
 }
 
-window.onload = getUserNames;
+window.onload = getUserData;

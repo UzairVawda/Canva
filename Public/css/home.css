@@ -42,9 +42,11 @@
   }
   .userData {
     display: flex;
-    margin-bottom: 10px;
   }
   #userName {
-    margin-top: 9px;
+    margin-top: 14px;
     margin-left: 5px;
+  }
+  hr {
+    margin-top: 0;
   }

@@ -40,6 +40,8 @@
 }
 .card {
   overflow: scroll;
+  -ms-overflow-style: none;  
+  scrollbar-width: none; 
 }
 #no-post-msg {
   margin:auto;
@@ -52,9 +54,40 @@
 }
 #pfp-img {
   border:5px solid rgb(33,37,40);
-  width:200px; 
-  height:200px;
+  width:150px; 
+  height:150px;
 }
 hr {
+  margin: 0;
+}
+.userData {
+  display: flex;
+}
+.edit-profile-btn {
+  border-radius: 8%;
+  background-color: rgb(40, 92, 161);
+  border: none;
   color: rgb(33,37,40);
+  padding: 5px;
+  width: 5rem;
+  border: 1px solid rgb(33,37,40);
+}
+.edit-profile-btn:hover{
+  background-color: rgb(33,37,40);
+  color: #fff
+}
+.post {
+  color: #fff;
+}
+#pfp {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+.userData {
+  padding-top: .9rem;
+}
+#userName {
+  margin-top:3px;
 }

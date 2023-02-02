@@ -37,3 +37,10 @@
   #no-post-text {
     margin: auto;
   }
+  h1 {
+    text-align: center;
+    margin: 2rem;
+  }
+  .edit-body {
+    width: 100%;
+  }

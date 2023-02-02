@@ -4,35 +4,37 @@
 </head>
 
 <body>
-
   <main>
     <%- include('./shared/homeSideNav.ejs') %> 
     <div class="body">
-      <form method="post" action="/editProfile">
-        <button class="m-2" title="Edit profile" data-bs-toggle="tooltip"><i class="fa-solid fa-user-pen"></i></button>
-      </form>
-      <div class="p-3 pt-5 text-center">
-        <img id="pfp-img" src="<%= user.userProfileImage %>" alt="profile-picture">
-        <% if (user.userName) { %>
-          <h1><%= user.userName %></h1>
-        <% } else { %>
-         <h1>User<%= user._id %> </h1>
-         <% } %> 
+      <div class="p-3">
+        <div class="text-center pt-3">
+          <img id="pfp-img" src="<%= user.userProfileImage %>" alt="profile-picture">
+          <% if (user.userName) { %>
+            <h1><%= user.userName %></h1>
+          <% } else { %>
+          <h1>User<%= user._id %> </h1>
+          <% } %> 
+          <form id="edit-profile-form" method="post" action="/editProfile">
+            <button class="m-2 edit-profile-btn" title="Edit profile" data-bs-toggle="tooltip"><i class="fa-solid fa-user-pen"></i></button>
+          </form>
+        </div>
       </div>
       <hr id="break">
-      <div class="posts text-center">
+      <div class="posts pb-3 text-center">
         <% if (posts.length > 0) { %>
           <% for(let x of posts) { %>
-            <div class="p-4">
+            <div class="px-4 post">
               <div class="card px-3 bg-dark" style="height: 30rem; width: 25rem;">
+                <div class="userData">
+                  <img id="pfp" src="" />
+                  <p id="userName" data-userId="<%= x.userId %>"></p>
+                </div>
+                <hr>
                 <img id="img-post" style="max-height: 20rem;" src="<%= x.imageURL %> " class="card-img-top pt-3">
                 <div class="card-body">
-                  <h5 class="card-title">
-                    <%= x.blogTitle %>
-                  </h5>
-                  <p class="card-text">
-                    <%= x.summary %>
-                  </p>
+                  <h5 class="card-title"><%= x.blogTitle %></h5>
+                  <p class="card-text"><%= x.summary %></p>
                 </div>
                 <div>
                   <% if (x.likedUsers.includes(userId)) { %>
@@ -54,5 +56,6 @@
   <script src="/bootstrap.bundle.min.js"></script>
 
   <script src="/js/home.js"></script>
+  <script src="/js/getUserData.js"></script>
 </body>
 
