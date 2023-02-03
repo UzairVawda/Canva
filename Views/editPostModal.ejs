@@ -10,11 +10,11 @@
                 <img id="post-image" src="/<%= post.imageURL %>">
                 <div class="form-outline form-white mb-4">
                     <input type="title" id="title" class="form-control-lg" name="title"
-                    maxlength="25" placeholder="title..." value="<%= post.blogTitle %>"/>
+                    maxlength="26" autocomplete="off" placeholder="title..." value="<%= post.blogTitle %>"/>
                 </div>
                 <div class="form-outline form-white mb-4">
                     <textarea type="body" id="body" class="form-control-lg" name="body"
-                    maxlength="204" placeholder="say someting..."><%= post.summary %></textarea>
+                    maxlength="200" autocomplete="off" placeholder="say someting..."><%= post.summary %></textarea>
                 </div>
                 <div class="buttons">
                     <button class="btn btn-outline-dark btn-lg px-5" value="update" name="submit" type="submit">Update</button>
