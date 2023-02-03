@@ -179,9 +179,14 @@ async function updateProfile(req,res,next) {
                     console.log(err)
                 }
                 else {
-                    fs.unlinkSync(profile.userProfileImage)
+                    try {
+                        fs.unlinkSync(profile.userProfileImage)
+                    }
+                    catch (error){
+                        console.log(error);
+                    }
                 }
-            })    
+            })     
             res.redirect('/profile')
     }
     catch (error) {
