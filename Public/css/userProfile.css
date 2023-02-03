@@ -38,11 +38,6 @@
   overflow: scroll;
   width: 100%;
 }
-.card {
-  overflow: scroll;
-  -ms-overflow-style: none;  
-  scrollbar-width: none; 
-}
 #no-post-msg {
   margin:auto;
   font-size: 2rem;
@@ -90,4 +85,7 @@ hr {
 }
 #userName {
   margin-top:3px;
+}
+.card-text {
+  text-overflow: ellipsis;
 }

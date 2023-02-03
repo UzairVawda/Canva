@@ -25,13 +25,13 @@
         <% if (posts.length > 0) { %>
           <% for(let x of posts) { %>
             <div class="px-4 post">
-              <div class="card px-3 bg-dark" style="height: 30rem; width: 25rem;">
+              <div class="card px-3 mb-5 bg-dark" style="height: 37rem; width: 25rem;">
                 <div class="userData">
                   <img id="pfp" src="" />
                   <p id="userName" data-userId="<%= x.userId %>"></p>
                 </div>
                 <hr>
-                <img id="img-post" style="max-height: 20rem;" src="<%= x.imageURL %> " class="card-img-top pt-3">
+                <img id="img-post" style="max-height: 18rem;" src="<%= x.imageURL %> " class="card-img-top pt-3">
                 <div class="card-body">
                   <h5 class="card-title"><%= x.blogTitle %></h5>
                   <p class="card-text"><%= x.summary %></p>

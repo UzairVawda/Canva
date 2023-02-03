@@ -6,9 +6,13 @@
     width: 500px;
 }
 textarea {
-    height: 12rem;
+    min-height: 8rem;
+    max-height: 12rem;
 }
 #imagePreview{
     height:35px;
     width: 35px;
+}
+#error {
+    color: red;
 }

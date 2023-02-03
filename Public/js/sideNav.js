@@ -3,7 +3,7 @@ async function fetchUserProfileImage() {
         method: 'GET'
     });
     const res = await response.json()
-    document.getElementById("userProfileImg").src = `${res.userProfileImg}`;
+    document.getElementById("userProfileImg").src = `/${res.userProfileImg}`;
 }
 
 window.onload = fetchUserProfileImage;

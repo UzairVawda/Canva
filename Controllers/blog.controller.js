@@ -26,18 +26,19 @@ async function fetchHomePage(req, res, next) {
 }
 
 function fetchCreatePost(req, res, next) {
-    res.render('createPost')
+    res.render('createPost', { msg : null })
 }
 
 async function createPost(req, res, next) {
     const body = req.body;
+
     try {
         const newPost = new Post(body.title, body.body, req.file.path, req.cookies.auth, 0, [], {})
         await newPost.uploadPost()
         res.redirect('/')
     } catch (error) {
         console.log(error)
-        res.redirect('/')
+        res.render('createPost', { msg : "Please upload an image" })
     }
 }
 
@@ -65,14 +66,29 @@ async function fetchProfile(req, res, next) {
     console.log(user);
     res.render('userProfile', { userId: req.cookies.auth, posts: myPosts, user : user });
 }
-async function deletePost(req, res, next) {
-    const { action, id } = req.params
+
+async function fetchEditPostModal(req,res,next) {
+    const { id } = req.params
     const mongoId = new mongodb.ObjectId(id);
     const post = await db.getDB().collection('posts').findOne({_id: mongoId})
-    if (action === 'edit') {
-        res.render('editPostModal', { post: post })
+    res.render('editPostModal', { post: post })
+}
+
+async function updateOrDelete(req,res,next) {
+    const { id } = req.params;
+    const { title, body, submit } = req.body
+    const mongoId = new mongodb.ObjectId(id);
+    const post = await db.getDB().collection('posts').findOne({_id: mongoId})
+    if (submit === 'update') {
+        await db.getDB().collection('posts').findOneAndUpdate({ _id: mongoId }, {
+            $set: {
+                blogTitle: title,
+                summary: body
+            }
+        })
+        res.redirect('/editAndDelete')
     }
-    if (action === 'delete') {
+    else if (submit === 'delete') {
         await db.getDB().collection('posts').deleteOne({ _id: mongoId }, (err, result) => {
             if (err) {
                 console.log(err)
@@ -83,16 +99,9 @@ async function deletePost(req, res, next) {
         })
         res.redirect('/editAndDelete')
     }
-}
-async function updatePost(req,res,next) {
-    const mongoId = new mongodb.ObjectId(req.params.id);
-    await db.getDB().collection('posts').findOneAndUpdate({ _id: mongoId }, {
-        $set: {
-            blogTitle: req.body.title,
-            summary: req.body.body
-        }
-    })
-    res.redirect('/editAndDelete')
+    else if (submit === 'cancel') {
+        res.redirect('/editAndDelete')
+    }
 }
 
 async function likePost(req, res) {
@@ -187,11 +196,11 @@ module.exports = {
     createPost: createPost,
     fetchEditAndDelete: fetchEditAndDelete,
     fetchProfile: fetchProfile,
-    deletePost: deletePost,
+    updateOrDelete: updateOrDelete,
     likePost: likePost,
-    updatePost : updatePost,
     eidtProfile : eidtProfile,
     updateProfile : updateProfile,
     getUserProfileImage : getUserProfileImage,
-    getUserName : getUserName
+    getUserName : getUserName,
+    fetchEditPostModal : fetchEditPostModal
 }

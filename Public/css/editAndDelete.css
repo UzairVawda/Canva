@@ -1,29 +1,16 @@
 #editAndDelete {
     color: rgb(40, 92, 161);
   }
-
-  .like-btn {
-    all: unset;
-    cursor: pointer;
-  }
-
   .p-4 {
     position: relative;
     color: #fff;
   }
-
   .posts {
     width: 100%;
     overflow-y: scroll;
     overflow-x: scroll;
     display: flex;
     flex-wrap: wrap;
-  }
-  #edit-btn{
-    float:left;
-  }
-  #del-btn {
-    float: right;
   }
   button:hover{
     color: rgb(40, 92, 161);
@@ -43,4 +30,8 @@
   }
   .edit-body {
     width: 100%;
+    overflow: scroll;
+  }
+  a {
+    text-decoration: none;
   }

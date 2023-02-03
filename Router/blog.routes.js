@@ -26,14 +26,15 @@ router.get('/profile', authController.authorize, authController.clearAuthSession
 
 router.get('/userProfileImage', authController.authorize, authController.clearAuthSessions, blogController.getUserProfileImage)
 
+router.get('/editAndDelete/:id', authController.authorize, authController.clearAuthSessions, blogController.fetchEditPostModal)
+
+
 
 router.post('/', authController.logout)
 
 router.post('/create', authController.authorize, authController.clearAuthSessions, upload.single('blogPostImage'), blogController.createPost)
 
-router.post('/editAndDelete/:action/:id', authController.authorize, authController.clearAuthSessions, blogController.deletePost, blogController.fetchEditAndDelete)
-
-router.post('/updatePost/:id', authController.authorize, authController.clearAuthSessions, blogController.updatePost)
+router.post('/updateOrDelete/:id', authController.authorize, authController.clearAuthSessions, blogController.updateOrDelete)
 
 router.post('/like/:id', blogController.likePost)
 
